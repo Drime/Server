@@ -4,7 +4,7 @@ services:
 
   # Reverse proxy
   traefik:
-    image: "traefik:v2.4"
+    image: "traefik"
     container_name: "traefik"
     command:
       #- "--log.level=DEBUG"
