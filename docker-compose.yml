@@ -11,8 +11,11 @@ services:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
+      - "--certificatesResolvers.myresolver.acme.httpChallenge=true"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesResolvers.myresolver.acme.httpChallenge.entryPoint=web"
       #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.myresolver.acme.email=k.bankersen@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
@@ -63,10 +66,10 @@ services:
     volumes:
       - ./volumes/unifi:/config
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.unifi.rule=Host(`unifi.bankersen.eu`)
-      - traefik.http.routers.unifi.entrypoints=websecure
-      - traefik.http.routers.unifi.tls=true
+      - "traefik.enable=true"
+      - "traefik.http.routers.unifi.rule=Host(`unifi.bankersen.eu`)"
+      - "traefik.http.routers.unifi.entrypoints=websecure"
+      - "traefik.http.routers.unifi.tls=true"
       - "traefik.http.routers.unifi.tls.certresolver=myresolver"
     environment:
       - PUID=1000
