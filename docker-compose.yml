@@ -17,6 +17,7 @@ services:
       - "--certificatesresolvers.myresolver.acme.email=k.bankersen@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
+      - "80:80"
       - "443:443"
       - "8081:8080"
     volumes:
@@ -56,6 +57,7 @@ services:
     image: linuxserver/unifi-controller
     container_name: unifi
     ports:
+      - 8443:8443
       - 8080:8080
       - 3478:3478/udp
     volumes:
