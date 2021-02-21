@@ -1,2 +1,2 @@
-volumes/*
-!volumes/*/.gitkeep
+volumes/*/*
+!.gitkeep
