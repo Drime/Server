@@ -23,7 +23,7 @@ jobs:
       # Checks-out the repository
       - name: Pull changes
         working-directory: /docker
-        run: git pull
+        run: echo $PWD && git pull
         
       # Deploys the docker containers
       - name: Deploy application
