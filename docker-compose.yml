@@ -40,8 +40,7 @@ services:
     - ./volumes/letsencrypt:/traefik:ro
     - ./volumes/letsencrypt/certificates:/output:rw
     environment:
-    - DOMAIN=example.org
-
+    - DOMAIN=bankersen.eu
 
   # Password manager
   bitwarden:
