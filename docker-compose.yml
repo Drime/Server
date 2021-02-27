@@ -66,7 +66,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.unifi.rule=Host(`unifi.bankersen.eu`)"
-      - "traefik.http.services.my-app.loadbalancer.server.port=8443"
+      - traefik.http.services.unifi.loadbalancer.server.scheme=https
+      - "traefik.http.services.unifi.loadbalancer.server.port=8443"
       - "traefik.http.routers.unifi.entrypoints=websecure"
       - "traefik.http.routers.unifi.tls.certresolver=myresolver"
     environment:
@@ -84,6 +85,8 @@ services:
   adguard:
     image: adguard/adguardhome:latest
     container_name: adguard
+    ports:
+      - 53:53
     volumes:
       - "./volumes/adguard/work:/opt/adguardhome/work"
       - "./volumes/adguard/conf:/opt/adguardhome/conf"
@@ -92,7 +95,7 @@ services:
       - "traefik.http.routers.adguard.rule=Host(`adguard.bankersen.eu`)"
       - "traefik.http.routers.adguard.entrypoints=websecure"
       - "traefik.http.routers.adguard.tls.certresolver=myresolver"
-      - "traefik.http.services.adguard.loadbalancer.server.port=3000"
+      - "traefik.http.services.adguard.loadbalancer.server.port=80"
     restart: unless-stopped
     logging:
       driver: "json-file"
