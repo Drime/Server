@@ -20,11 +20,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-        with:
-          path: /docker
+      # Checks-out the repository
+      - name: Pull changes
+        working-directory: /docker
+        run: git pull
+        
+      # Deploys the docker containers
       - name: Deploy application
         working-directory: /docker
         run: docker-compose up -d
