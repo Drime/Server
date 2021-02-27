@@ -33,6 +33,16 @@ services:
         max-size: "10m"
         max-file: "1"
   
+  # Dump certificates to allow re-use
+  traefik-certs-dumper:
+    image: ldez/traefik-certs-dumper
+    volumes:
+    - ./volumes/letsencrypt:/traefik:ro
+    - ./volumes/letsencrypt/certificates:/output:rw
+    environment:
+    - DOMAIN=example.org
+
+
   # Password manager
   bitwarden:
     image: bitwardenrs/server:latest
@@ -87,7 +97,8 @@ services:
     image: adguard/adguardhome:latest
     container_name: adguard
     ports:
-      - "53:53"
+      - "53:53/udp"
+      - "53:53/tcp"
       - "853:853/tcp"
     volumes:
       - "./volumes/adguard/work:/opt/adguardhome/work"
