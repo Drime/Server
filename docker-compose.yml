@@ -88,9 +88,11 @@ services:
     container_name: adguard
     ports:
       - "53:53"
+      - "853:853/tcp"
     volumes:
       - "./volumes/adguard/work:/opt/adguardhome/work"
       - "./volumes/adguard/conf:/opt/adguardhome/conf"
+      - "./volumes/letsencrypt:/letsencrypt"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.adguard.rule=Host(`adguard.bankersen.eu`)"
