@@ -9,6 +9,7 @@ services:
     command:
       - "--log.level=DEBUG"
       - "--api.insecure=true"
+      - "--serversTransport.insecureSkipVerify=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
@@ -66,7 +67,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.unifi.rule=Host(`unifi.bankersen.eu`)"
-      - traefik.http.services.unifi.loadbalancer.server.scheme=https
+      - "traefik.http.services.unifi.loadbalancer.server.scheme=https"
       - "traefik.http.services.unifi.loadbalancer.server.port=8443"
       - "traefik.http.routers.unifi.entrypoints=websecure"
       - "traefik.http.routers.unifi.tls.certresolver=myresolver"
@@ -86,7 +87,7 @@ services:
     image: adguard/adguardhome:latest
     container_name: adguard
     ports:
-      - 53:53
+      - "53:53"
     volumes:
       - "./volumes/adguard/work:/opt/adguardhome/work"
       - "./volumes/adguard/conf:/opt/adguardhome/conf"
