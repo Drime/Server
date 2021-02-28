@@ -49,18 +49,29 @@ services:
       - "./volumes/bitwarden:/data"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.bitwarden-ui.rule=Host(`bitwarden.bankersen.eu`)"
-      - "traefik.http.routers.bitwarden-ui.entrypoints=websecure"
-      - "traefik.http.routers.bitwarden-ui.tls.certresolver=myresolver"
-      # Websocket configuration
+      - "traefik.http.routers.bitwarden.entrypoints=web"
+      - "traefik.http.routers.bitwarden.rule=Host(`bitwarden.bankersen.eu`)"
+      - "traefik.http.middlewares.bitwarden-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.bitwarden.middlewares=bitwarden-https-redirect"
+      - "traefik.http.routers.bitwarden.service=bitwarden"
+      - "traefik.http.services.bitwarden.loadbalancer.server.port=80"
+
+      - "traefik.http.routers.bitwarden-secure.entrypoints=websecure"
+      - "traefik.http.routers.bitwarden-secure.rule=Host(`bitwarden.bankersen.eu`)"
+      - "traefik.http.routers.bitwarden-secure.tls=true"
+      - "traefik.http.routers.bitwarden-secure.tls.certresolver=mycert"
+      - "traefik.http.routers.bitwarden-secure.service=bitwarden-secure"
+      - "traefik.http.services.bitwarden-secure.loadbalancer.server.port=80"
+      - "traefik.http.routers.bitwarden-ui-https.tls.certresolver=myresolver"
+
       - "traefik.http.routers.bitwarden-ws.entrypoints=websecure"
       - "traefik.http.routers.bitwarden-ws.rule=Host(`bitwarden.bankersen.eu`) && Path(`/notifications/hub`)"
-      - "traefik.http.services.bitwarden-ws.loadbalancer.server.port=3012"
-      - "traefik.http.routers.bitwarden-ws.tls=true"
-      - "traefik.http.routers.bitwarden-ws.tls.certresolver=myresolver"
       - "traefik.http.middlewares.bitwarden-ws-strip.stripprefix.prefixes=/notifications/hub"
       - "traefik.http.routers.bitwarden-ws.middlewares=bitwarden-ws-strip"
-
+      - "traefik.http.routers.bitwarden-ws.tls=true"
+      - "traefik.http.routers.bitwarden-ws.tls.certresolver=myresolver"
+      - "traefik.http.routers.bitwarden-ws.service=bitwarden-ws"
+      - "traefik.http.services.bitwarden-ws.loadbalancer.server.port=3012"
     environment:
       WEBSOCKET_ENABLED: "true"
       SIGNUPS_ALLOWED: "false"
