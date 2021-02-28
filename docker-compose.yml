@@ -7,7 +7,6 @@ services:
     image: "traefik"
     container_name: "traefik"
     command:
-      - "--log.level=DEBUG"
       - "--api.insecure=true"
       - "--serversTransport.insecureSkipVerify=true"
       - "--providers.docker=true"
@@ -53,6 +52,10 @@ services:
       - "traefik.http.routers.bitwarden.rule=Host(`bitwarden.bankersen.eu`)"
       - "traefik.http.routers.bitwarden.entrypoints=websecure"
       - "traefik.http.routers.bitwarden.tls.certresolver=myresolver"
+      # Websocket configuration
+      - traefik.http.routers.bitwarden-ws.rule=Host(`bitwarden.bankersen.eu`) && Path(`/notifications/hub`)
+      - traefik.http.routers.bitwarden-ws.service=bitwarden-websocket
+      - traefik.http.services.bitwarden-ws.loadbalancer.server.port=3012
     environment:
       WEBSOCKET_ENABLED: "true"
       SIGNUPS_ALLOWED: "false"
