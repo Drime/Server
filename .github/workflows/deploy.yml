@@ -23,7 +23,7 @@ jobs:
       # Checks-out the repository
       - name: Pull changes
         working-directory: /docker
-        run: echo $PWD && git pull
+        run: git pull
         
       # Deploys the docker containers
       - name: Deploy application
@@ -31,5 +31,5 @@ jobs:
         env:
           ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
         working-directory: /docker
-        run: docker-compose up -d
+        run: echo $ADMIN_TOKEN && docker-compose up -d
 

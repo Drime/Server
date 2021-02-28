@@ -48,7 +48,7 @@ services:
       SIGNUPS_ALLOWED: "false"
       INVITATIONS_ALLOWED: "false"
       DOMAIN: "https://bitwarden.bankersen.eu"
-      ADMIN_TOKEN: "${ADMIN_TOKEN}"
+      ADMIN_TOKEN: ${ADMIN_TOKEN}
     restart: unless-stopped
     logging:
       driver: "json-file"
