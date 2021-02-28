@@ -32,6 +32,6 @@ jobs:
           ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
         working-directory: /docker
         run: |
-          echo {#ADMIN_TOKEN}
+          echo ${#ADMIN_TOKEN}
           ADMIN_TOKEN=${#ADMIN_TOKEN} docker-compose up -d
 
