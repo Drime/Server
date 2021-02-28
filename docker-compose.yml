@@ -31,6 +31,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     labels:
       - "traefik.http.routers.dashboard.rule=Host(`traefik.bankersen.eu`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
     restart: unless-stopped
     logging:
       driver: "json-file"
