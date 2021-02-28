@@ -7,7 +7,6 @@ services:
     image: "traefik"
     container_name: "traefik"
     command:
-      - "--log.level=DEBUG"
       - "--api.insecure=true"
       - "--serversTransport.insecureSkipVerify=true"
       - "--providers.docker=true"
@@ -32,15 +31,6 @@ services:
       options:
         max-size: "10m"
         max-file: "1"
-  
-  # Dump certificates to allow re-use
-  traefik-certs-dumper:
-    image: ldez/traefik-certs-dumper
-    volumes:
-    - ./volumes/letsencrypt:/traefik:ro
-    - ./volumes/letsencrypt/certificates:/output:rw
-    environment:
-    - DOMAIN=bankersen.eu
 
   # Password manager
   bitwarden:
@@ -55,7 +45,10 @@ services:
       - "traefik.http.routers.bitwarden.tls.certresolver=myresolver"
     environment:
       WEBSOCKET_ENABLED: "true"
-      SIGNUPS_ALLOWED: "true"
+      SIGNUPS_ALLOWED: "false"
+      INVITATIONS_ALLOWED: "false"
+      DOMAIN: "https://bitwarden.bankersen.eu"
+      ADMIN_TOKEN: "${ADMIN_TOKEN}"
     restart: unless-stopped
     logging:
       driver: "json-file"
