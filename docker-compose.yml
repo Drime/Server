@@ -7,7 +7,6 @@ services:
     image: "traefik:v1.7-alpine"
     container_name: "traefik"
     command:
-      - "--api.insecure=true"
       - "--serversTransport.insecureSkipVerify=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
