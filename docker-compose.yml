@@ -7,6 +7,7 @@ services:
     image: "traefik:v2.4"
     container_name: "traefik"
     command:
+      - "--api.insecure=true"
       - "--serversTransport.insecureSkipVerify=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
@@ -120,7 +121,7 @@ services:
       - "traefik.http.routers.adguard.entrypoints=websecure"
       - "traefik.http.routers.adguard.tls.certresolver=myresolver"
       - "traefik.http.services.adguard.loadbalancer.server.port=3000"
-      - "traefik.http.middlewares.adguard.ipwhitelist.sourcerange=127.0.0.1/32, 192.168.8.1/254"
+      - "traefik.http.middlewares.adguard.ipwhitelist.sourcerange=127.0.0.1/32, 82.169.38.34"
     restart: unless-stopped
     logging:
       driver: "json-file"
