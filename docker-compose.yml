@@ -81,6 +81,7 @@ services:
     ports:
       - 8080:8080
       - 3478:3478/udp
+      - 8443:8443
     volumes:
       - ./volumes/unifi:/config
     labels:
@@ -119,6 +120,7 @@ services:
       - "traefik.http.routers.adguard.entrypoints=websecure"
       - "traefik.http.routers.adguard.tls.certresolver=myresolver"
       - "traefik.http.services.adguard.loadbalancer.server.port=3000"
+      - "traefik.http.middlewares.adguard.ipwhitelist.sourcerange=127.0.0.1/32, 192.168.8.1/254"
     restart: unless-stopped
     logging:
       driver: "json-file"
