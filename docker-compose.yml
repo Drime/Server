@@ -41,39 +41,39 @@ services:
         max-file: "1"
 
   # Password manager
-  bitwarden:
-    image: bitwardenrs/server:1.19.0-alpine
-    container_name: bitwarden
-    volumes:
-      - "./volumes/bitwarden:/data"
-    labels:
-      - "traefik.enable=true"
-      # Application configuration
-      - "traefik.http.routers.bitwarden-secure.entrypoints=websecure"
-      - "traefik.http.routers.bitwarden-secure.rule=Host(`bitwarden.bankersen.eu`)"
-      - "traefik.http.routers.bitwarden-secure.tls=true"
-      - "traefik.http.routers.bitwarden-secure.tls.certresolver=myresolver"
-      - "traefik.http.routers.bitwarden-secure.service=bitwarden-secure"
-      - "traefik.http.services.bitwarden-secure.loadbalancer.server.port=80"
-      # Websocket configuration
-      - "traefik.http.routers.bitwarden-ws.entrypoints=websecure"
-      - "traefik.http.routers.bitwarden-ws.rule=Host(`bitwarden.bankersen.eu`) && Path(`/notifications/hub`)"
-      - "traefik.http.routers.bitwarden-ws.tls=true"
-      - "traefik.http.routers.bitwarden-ws.tls.certresolver=myresolver"
-      - "traefik.http.routers.bitwarden-ws.service=bitwarden-ws"
-      - "traefik.http.services.bitwarden-ws.loadbalancer.server.port=3012"
-    environment:
-      WEBSOCKET_ENABLED: "true"
-      SIGNUPS_ALLOWED: "false"
-      INVITATIONS_ALLOWED: "false"
-      DOMAIN: "https://bitwarden.bankersen.eu"
-      ADMIN_TOKEN: ${ADMIN_TOKEN}
-    restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "1"
+#   bitwarden:
+#     image: bitwardenrs/server:1.19.0-alpine
+#     container_name: bitwarden
+#     volumes:
+#       - "./volumes/bitwarden:/data"
+#     labels:
+#       - "traefik.enable=true"
+#       # Application configuration
+#       - "traefik.http.routers.bitwarden-secure.entrypoints=websecure"
+#       - "traefik.http.routers.bitwarden-secure.rule=Host(`bitwarden.bankersen.eu`)"
+#       - "traefik.http.routers.bitwarden-secure.tls=true"
+#       - "traefik.http.routers.bitwarden-secure.tls.certresolver=myresolver"
+#       - "traefik.http.routers.bitwarden-secure.service=bitwarden-secure"
+#       - "traefik.http.services.bitwarden-secure.loadbalancer.server.port=80"
+#       # Websocket configuration
+#       - "traefik.http.routers.bitwarden-ws.entrypoints=websecure"
+#       - "traefik.http.routers.bitwarden-ws.rule=Host(`bitwarden.bankersen.eu`) && Path(`/notifications/hub`)"
+#       - "traefik.http.routers.bitwarden-ws.tls=true"
+#       - "traefik.http.routers.bitwarden-ws.tls.certresolver=myresolver"
+#       - "traefik.http.routers.bitwarden-ws.service=bitwarden-ws"
+#       - "traefik.http.services.bitwarden-ws.loadbalancer.server.port=3012"
+#     environment:
+#       WEBSOCKET_ENABLED: "true"
+#       SIGNUPS_ALLOWED: "false"
+#       INVITATIONS_ALLOWED: "false"
+#       DOMAIN: "https://bitwarden.bankersen.eu"
+#       ADMIN_TOKEN: ${ADMIN_TOKEN}
+#     restart: unless-stopped
+#     logging:
+#       driver: "json-file"
+#       options:
+#         max-size: "10m"
+#         max-file: "1"
 
   # Ubuqiti manager
   unifi:
@@ -130,20 +130,20 @@ services:
         max-file: "1"
 
   # Manage docker containers
-  portainer:
-    image: portainer/portainer:latest
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./volumes/portainer:/data
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`portainer.bankersen.eu`)"
-      - "traefik.http.routers.portainer.entrypoints=websecure"
-      - "traefik.http.routers.portainer.tls.certresolver=myresolver"
-      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
-    restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "1"
+#   portainer:
+#     image: portainer/portainer:latest
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
+#       - ./volumes/portainer:/data
+#     labels:
+#       - "traefik.enable=true"
+#       - "traefik.http.routers.portainer.rule=Host(`portainer.bankersen.eu`)"
+#       - "traefik.http.routers.portainer.entrypoints=websecure"
+#       - "traefik.http.routers.portainer.tls.certresolver=myresolver"
+#       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+#     restart: unless-stopped
+#     logging:
+#       driver: "json-file"
+#       options:
+#         max-size: "10m"
+#         max-file: "1"
